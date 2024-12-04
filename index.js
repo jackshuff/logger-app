@@ -20,7 +20,6 @@ let nextId = 1
 // add a new tea
 app.post('/teas', (req, res) => {
   const { name, price } = req.body;
-
   // Create the new tea
   const newTea = { id: nextId++, name, price };
   teaData.push(newTea);
@@ -31,6 +30,7 @@ app.post('/teas', (req, res) => {
     url: req.originalUrl, // Original URL being accessed
     clientIp: req.ip, // IP address of the client
     userAgent: req.headers['user-agent'], // User-Agent header
+    body: req.body,
     message: "New tea created", // Human-readable message
   };
   logger.log('info', response);
