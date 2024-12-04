@@ -1,7 +1,7 @@
-const tracer = require('dd-trace');
-const formats = require('dd-trace/ext/formats');
+import tracer from 'dd-trace';
+import formats from 'dd-trace/ext/formats.js';
 
-class Logger {
+export default class Logger {
     log(level, message) {
         const span = tracer.scope().active();
         const time = new Date().toISOString();
@@ -14,6 +14,3 @@ class Logger {
         console.log(JSON.stringify(record));
     }
 }
-
-module.exports = Logger;
-
