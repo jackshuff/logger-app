@@ -31,7 +31,7 @@ app.post('/teas', (req, res) => {
     clientIp: req.ip, // IP address of the client
     userAgent: req.headers['user-agent'], // User-Agent header
     body: req.body,
-    message: "New tea created", // Human-readable message
+    message: "New tea Created", // Human-readable message
   };
   logger.log('info', response);
 
