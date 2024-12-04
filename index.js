@@ -24,6 +24,17 @@ app.post('/teas', (req, res) => {
 
 // get all tea
 app.get('/teas', (req, res) => {
+  const response = {
+    level: "info",
+    timestamp: new Date().toISOString(),
+    event: "web_request",
+    method: req.method, // HTTP method of the request
+    url: req.originalUrl, // Original URL being accessed
+    clientIp: req.ip, // IP address of the client
+    userAgent: req.headers['user-agent'], // User-Agent header
+    message: "Request to teas", // Human-readable message
+  };
+  console.log(response);
   res.status(200).send(teaData)
 })
 app.get('/', (req, res) => {
