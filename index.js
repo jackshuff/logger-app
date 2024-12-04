@@ -1,5 +1,9 @@
 import 'dotenv/config'
 import tracer from 'dd-trace';
+import Logger from './logger';
+
+const logger = new Logger();
+
 
 tracer.init({
   logInjection: true
@@ -25,7 +29,6 @@ app.post('/teas', (req, res) => {
 // get all tea
 app.get('/teas', (req, res) => {
   const response = {
-    level: "info",
     timestamp: new Date().toISOString(),
     event: "web_request",
     method: req.method, // HTTP method of the request
@@ -34,7 +37,7 @@ app.get('/teas', (req, res) => {
     userAgent: req.headers['user-agent'], // User-Agent header
     message: "Request to teas", // Human-readable message
   };
-  console.log(response);
+  logger.log('info', response);
   res.status(200).send(teaData)
 })
 app.get('/', (req, res) => {
