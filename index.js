@@ -19,12 +19,19 @@ let nextId = 1
 
 // add a new tea
 app.post('/teas', (req, res) => {
-  console.log("POST")
-  const {name, price} = req.body
-  const newTea = {id: nextId++, name, price}
-  teaData.push(newTea)
-  res.status(201).send(newTea)
-})
+  const { name, price } = req.body;
+
+  // Create the new tea
+  const newTea = { id: nextId++, name, price };
+  teaData.push(newTea);
+
+  // Log the creation of a new tea
+  logger.log('info', `New tea created: ${JSON.stringify(newTea)}`);
+
+  // Send the response
+  res.status(201).send(newTea);
+});
+
 
 // get all tea
 app.get('/teas', (req, res) => {
