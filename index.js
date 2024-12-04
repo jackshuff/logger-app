@@ -24,9 +24,16 @@ app.post('/teas', (req, res) => {
   // Create the new tea
   const newTea = { id: nextId++, name, price };
   teaData.push(newTea);
-
-  // Log the creation of a new tea
-  logger.log('info', `New tea created: ${JSON.stringify(newTea)}`);
+  const response = {
+    timestamp: new Date().toISOString(),
+    event: "web_request",
+    method: req.method, // HTTP method of the request
+    url: req.originalUrl, // Original URL being accessed
+    clientIp: req.ip, // IP address of the client
+    userAgent: req.headers['user-agent'], // User-Agent header
+    message: "New tea created", // Human-readable message
+  };
+  logger.log('info', response);
 
   // Send the response
   res.status(201).send(newTea);
