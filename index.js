@@ -55,6 +55,7 @@ app.get('/teas', (req, res) => {
   res.status(200).send(teaData)
 })
 app.get('/', (req, res) => {
+  console.log('reqttt')
   const response = {
     level: "info",
     timestamp: new Date().toISOString(),
@@ -68,6 +69,29 @@ app.get('/', (req, res) => {
 
   res.status(200).send(response);
 });
+
+const requestsArray = [];
+
+// This route captures incoming requests, extracts their data, and stores it
+app.get('/req', (req, res) => {
+  const requestData = {
+    method: req.method,
+    url: req.url,
+    headers: req.headers,
+    query: req.query,
+    params: req.params,
+    body: req.body
+  };
+
+  requestsArray.push(requestData);
+  res.status(200).json(requestData);
+});
+
+// This route returns the array of all previously captured request data
+app.get('/info', (req, res) => {
+  res.status(200).json(requestsArray);
+});
+
 
 
 //get a tea with id
