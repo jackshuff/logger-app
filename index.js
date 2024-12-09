@@ -74,16 +74,7 @@ const requestsArray = [];
 
 // This route captures incoming requests, extracts their data, and stores it
 app.get('/req', (req, res) => {
-  const requestData = {
-    method: req.method,
-    url: req.url,
-    headers: req.headers,
-    query: req.query,
-    params: req.params,
-    body: req.body
-  };
-
-  requestsArray.push(requestData);
+  requestsArray.push(req);
   res.status(200).json(requestData);
 });
 
