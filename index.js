@@ -72,10 +72,31 @@ app.get('/', (req, res) => {
 
 const requestsArray = [];
 
-// This route captures incoming requests, extracts their data, and stores it
 app.get('/req', (req, res) => {
-  requestsArray.push(req);
-  res.status(200);
+  const requestData = {
+    method: req.method,         // HTTP method (GET, POST, etc.)
+    protocol: req.protocol,     // http or https
+    secure: req.secure,         // boolean indicating if the request is secure
+    ip: req.ip,                 // Remote IP address
+    ips: req.ips,               // Array of IP addresses if behind a proxy
+    hostname: req.hostname,     // Host name (without port)
+    path: req.path,             // URL path (e.g. /req)
+    baseUrl: req.baseUrl,       // The base URL (e.g. if mounted on a subpath)
+    originalUrl: req.originalUrl,// The original URL requested
+    url: req.url,               // The URL path and query string
+    headers: req.headers,       // Request headers
+    query: req.query,           // Parsed query string parameters
+    params: req.params,         // Route parameters (e.g. :id)
+    body: req.body,             // Request body (if parsed middleware is used)
+    cookies: req.cookies,       // Cookies (if cookie-parser middleware is used)
+    subdomains: req.subdomains  // Subdomains as an array
+  };
+
+  requestsArray.push(requestData);
+  res.status(200).json({
+    message: "Request logged",
+    data: requestData
+  });
 });
 
 // This route returns the array of all previously captured request data
