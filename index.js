@@ -1,18 +1,19 @@
 import 'dotenv/config'
-import tracer from 'dd-trace';
-import Logger from './logger.js';
-
-const logger = new Logger();
-
-
-tracer.init({
-  logInjection: true
-});
 
 import express from 'express'
+
 const app = express()
 const port = process.env.PORT || 3000
+
 app.use(express.json())
+app.use((req, res, next) => {
+  const allowedHost = 'porridge.staging.pensionbee.com';
+  if (req.hostname !== allowedHost) {
+      return res.status(403).send('Forbidden');
+  }
+  next();
+});
+
 
 let teaData = []
 let nextId = 1
